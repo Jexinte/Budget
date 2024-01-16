@@ -1,3 +1,5 @@
+.idea
+phpstan.dist.neon
 
 ###> symfony/framework-bundle ###
 /.env.local
