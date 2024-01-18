@@ -92,7 +92,7 @@ class SpendingProfile
         return $this;
     }
 
-    public function getExpenseType(): ExpenseType
+    public function getExpenseType(): ?ExpenseType
     {
         return $this->expenseType;
     }

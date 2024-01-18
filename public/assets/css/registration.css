@@ -1,0 +1,64 @@
+header {
+    margin-bottom: 9em;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+}
+.links > img {
+    padding-left: 2em;
+}
+.links{
+    text-decoration: none;
+    color:black;
+    font-weight: bolder;
+}
+
+#login {
+    position: relative;
+    top: 28px;
+    padding-right: 2em;
+}
+#h1 {
+font-weight: bolder;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+}
+form label,form input {
+    width: 100%;
+}
+#registration_save{
+    width: 100%;
+}
+
+
+text{
+    display: none;
+}
+#registration ul {
+    padding:0;
+    position: absolute;
+    top: 4.8em;
+}
+
+#registration ul li {
+    color: indianred;
+}
+form input {
+    padding:.4em;
+}
+
+form div {
+    position: relative;
+    width: 100%;
+}
+
+#registration{
+    margin-bottom: 3em;
+}

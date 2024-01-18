@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -18,6 +19,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: 'Oops! Ce champ ne peut être vide !')]
+    #[Assert\Regex(
+        pattern: '/^[A-Z][a-zA-Z0-9]{0,9}$/',
+        message: 'Le nom utilisateur doit commencer par une lettre majuscule',
+        match: true
+    )]
     private ?string $username = null;
 
     /**
@@ -27,9 +34,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var ?string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Oops! Ce champ ne peut être vide !')]
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: SpendingProfile::class)]
@@ -93,7 +101,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
