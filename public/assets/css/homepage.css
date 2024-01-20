@@ -1,0 +1,33 @@
+header {
+    margin-bottom: 9em;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+}
+.links > img {
+    padding-left: 2em;
+}
+#add_spending_profile{
+    text-decoration: none;
+    color: black;
+    font-weight: bolder;
+    display: block;
+    font-size: 3em;
+    margin-top: 7em;
+}
+
+#logout {
+    position: relative;
+    top: 28px;
+    padding-right: 2em;
+    text-decoration: none;
+}
+.fa-solid{
+    color: black;
+}
+
+footer {
+    margin-top: 26em;
+}
