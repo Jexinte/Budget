@@ -3,9 +3,10 @@
 namespace App\Entity;
 
 use App\Enum\Category;
-use App\Enum\ExpenseType;
+use App\Enum\Priority;
 use App\Repository\ExpenseRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ExpenseRepository::class)]
 class Expense
@@ -16,16 +17,21 @@ class Expense
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:'Oops! Ce champ ne peut être vide !')]
     private ?string $name = null;
 
-    #[ORM\Column(enumType: Category::class)]
-    private ?Category $category = null;
+
+    #[ORM\Column(enumType:Category::class)]
+    #[Assert\NotBlank(message:'Oops! Veuillez sélectionner la catégorie de votre dépense !')]
+    private ?Category $category;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:'Oops! Veuillez spécifier le montant de vôtre dépense !')]
     private ?float $amount = null;
 
-    #[ORM\Column(enumType: ExpenseType::class)]
-    private ?ExpenseType $typeOfExpense = null;
+    #[ORM\Column(enumType: Priority::class)]
+    #[Assert\NotBlank(message:'Oops! Merci de spécifier la priorité de vôtre dépense !')]
+    private ?Priority $priority = null;
 
     #[ORM\ManyToOne(inversedBy: 'expense')]
     #[ORM\JoinColumn(nullable: false)]
@@ -72,14 +78,14 @@ class Expense
         return $this;
     }
 
-    public function getTypeOfExpense(): ?ExpenseType
+    public function getPriority(): ?Priority
     {
-        return $this->typeOfExpense;
+        return $this->priority;
     }
 
-    public function setTypeOfExpense(?ExpenseType $typeOfExpense): static
+    public function setPriority(?Priority $priority): static
     {
-        $this->typeOfExpense = $typeOfExpense;
+        $this->priority = $priority;
 
         return $this;
     }

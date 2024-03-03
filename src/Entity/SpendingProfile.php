@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Enum\ExpenseType;
 use App\Repository\SpendingProfileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SpendingProfileRepository::class)]
 class SpendingProfile
@@ -17,12 +17,13 @@ class SpendingProfile
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:'Oops! Ce champ ne peut être vide !')]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:'Oops! Ce champ ne peut être vide !')]
     private ?float $budget = null;
-    #[ORM\Column(enumType:ExpenseType::class)]
-    private ?ExpenseType $expenseType;
+
 
     #[ORM\Column]
     private ?float $remainingBalance = null;
@@ -34,6 +35,9 @@ class SpendingProfile
     #[ORM\OneToMany(mappedBy: 'spendingProfile', targetEntity: Expense::class)]
     private Collection $expense;
 
+    #[Assert\Type(type:Expense::class)]
+    #[Assert\Valid]
+    protected ?Expense $expenseForm;
     public function __construct()
     {
         $this->expense = new ArrayCollection();
@@ -92,15 +96,7 @@ class SpendingProfile
         return $this;
     }
 
-    public function getExpenseType(): ?ExpenseType
-    {
-        return $this->expenseType;
-    }
 
-    public function setExpenseType(ExpenseType $expenseType): void
-    {
-        $this->expenseType = $expenseType;
-    }
 
     /**
      * @return Collection<int, Expense>
@@ -130,5 +126,15 @@ class SpendingProfile
         }
 
         return $this;
+    }
+
+    public function getExpenseForm(): ?Expense
+    {
+        return $this->expenseForm;
+    }
+
+    public function setExpenseForm(?Expense $expenseForm): void
+    {
+        $this->expenseForm = $expenseForm;
     }
 }

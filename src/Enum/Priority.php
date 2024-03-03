@@ -2,7 +2,7 @@
 
 namespace App\Enum;
 
-enum ExpenseType: string{
+enum Priority: string{
     case Mandatory = 'Obligatoire';
     case Necessary = 'Nécessaire';
     case Optional = 'Optionnel';
