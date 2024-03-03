@@ -31,11 +31,10 @@ watchLocalStorage()
 const showExpenses = () => {
     let allExpenses = JSON.parse(localStorage.getItem('expenses'))
 
-    switch (true) {
-        case allExpenses === null:
-            h2.textContent = "Aucune dépense en cours"
-            break;
-        default:
+         if(allExpenses === null){
+             return null
+         }
+
             h2.textContent = "Résumé des dépenses"
             allExpenses.forEach((expense, i) => {
                 const tBody = document.createElement('tbody')
@@ -51,8 +50,6 @@ const showExpenses = () => {
             `
                 table.append(tBody)
             })
-            break;
-    }
 
 }
 showExpenses()
