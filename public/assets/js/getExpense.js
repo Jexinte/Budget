@@ -90,3 +90,5 @@ const checkEmptyNessOfLocalStorage = (expenses) => {
 }
 
 allowClickOnExpensesAlreadySaved()
+
+log('test')
