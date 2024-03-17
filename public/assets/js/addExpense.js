@@ -178,19 +178,20 @@ spendingForm.addEventListener('submit',(e) => {
     const noErrors = [isNameEmptyResult,isBudgetEmptyResult,isBudgetContainsOnlyNumbersResult,isNameContainsOnlyLettersResult]
     const isFalse = (currentValue) => currentValue === false
     if(noErrors.every(isFalse) && expenses.length !== 0) {
-
-        fetch('/spending-profile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(expenses)
-        })
-            .then(response => {
-                response.json().then(resJson => {
-                })
-
+        if(window.confirm('Êtes-vous d\'envoyer ses dépenses ? Vous ne pourrez plus les modifier par la suite !')){
+            fetch('/spending-profile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(expenses)
             })
+                .then(response => {
+                    response.json().then(resJson => {
+                    })
+
+                })
+        }
 
     }
 
