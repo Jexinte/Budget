@@ -1,4 +1,7 @@
-const addExpenseButton = document.getElementById('add_spending')
+const spendingProfileFieldName = document.getElementById('spending_profile_name')
+const spendingProfileNameError = document.getElementById('error-name-spending')
+const spendingProfileFieldBudget = document.getElementById('spending_profile_budget')
+const spendingProfileBudgetError = document.getElementById('error-budget')
 const expenseFieldName = document.getElementById('spending_profile_expenseForm_name')
 const priorityField = document.getElementById('spending_profile_expenseForm_priority')
 const amountField = document.getElementById('spending_profile_expenseForm_amount')
@@ -7,7 +10,9 @@ const expenseNameError = document.getElementById('error-name')
 const expenseAmountError = document.getElementById('error-amount')
 const expenseCategoryError = document.getElementById('error-category')
 const expensePriorityError = document.getElementById('error-priority')
-const log = console.log
+const addExpenseButton = document.getElementById('add_spending')
+const spendingForm = document.getElementById('spending_form')
+const submitButton = document.getElementById('spending_profile_save')
 addExpenseButton.addEventListener('click', (e) => {
     const expensesArr = JSON.parse(localStorage.getItem('expenses'))
     let expense =
@@ -17,12 +22,12 @@ addExpenseButton.addEventListener('click', (e) => {
                 category: categoryField.value,
                 priority: priorityField.value
         }
-    const nameErrorResult = checkExpenseNameField(expense)
+    const nameErrorResult = isExpenseNameFieldEmpty(expense)
     const nameTypeOfResult = checkNameTypeOf(expense)
-    const amountErrorResult = checkExpenseAmountField(expense)
+    const amountErrorResult = isExpenseAmountFieldEmpty(expense)
     const amountTypeOfResult = checkExpenseAmountTypeOf(expense)
-    const categoryErrorResult = checkExpenseCategoryField(expense)
-    const priorityErrorResult = checkExpensePriorityField(expense)
+    const categoryErrorResult = isExpenseCategoryFieldEmpty(expense)
+    const priorityErrorResult = isExpensePriorityFieldEmpty(expense)
     const errors = [nameErrorResult,nameTypeOfResult,amountErrorResult,categoryErrorResult,priorityErrorResult,amountTypeOfResult]
     const isFalse = (currentValue) => currentValue === false
     switch (true) {
@@ -32,8 +37,7 @@ addExpenseButton.addEventListener('click', (e) => {
             }
             break;
         case expensesArr.length !== 0:
-            const expenseNameAlreadyExistResult = checkNameOfExpensesNotAlreadyExist(expense)
-            log(expenseNameAlreadyExistResult)
+            const expenseNameAlreadyExistResult = isNameOfExpensesNotAlreadyExist(expense)
             if(errors.every(isFalse) && !expenseNameAlreadyExistResult){
                 expensesArr.push(expense)
                 localStorage.setItem('expenses', JSON.stringify(expensesArr))
@@ -43,7 +47,7 @@ addExpenseButton.addEventListener('click', (e) => {
 
 })
 
-const checkExpenseNameField = (expense) => {
+const isExpenseNameFieldEmpty = (expense) => {
     if(expense.name === "")
     {
         expenseNameError.textContent =  "Ce champ ne peut être vide !"
@@ -64,7 +68,7 @@ const checkNameTypeOf = (expense) => {
     return false
 }
 
-const checkExpenseAmountField = (expense) => {
+const isExpenseAmountFieldEmpty = (expense) => {
     if(expense.amount === "" )
     {
         expenseAmountError.textContent =  "Ce champ ne peut être vide !"
@@ -86,7 +90,7 @@ const checkExpenseAmountTypeOf = (expense) => {
     return false
 }
 
-const checkExpenseCategoryField = (expense) => {
+const isExpenseCategoryFieldEmpty = (expense) => {
     if(expense.category === "")
     {
         expenseCategoryError.textContent =  "Ce champ ne peut être vide !"
@@ -97,7 +101,7 @@ const checkExpenseCategoryField = (expense) => {
     return false
 }
 
-const checkExpensePriorityField = (expense) => {
+const isExpensePriorityFieldEmpty = (expense) => {
     if(expense.priority === "")
     {
         expensePriorityError.textContent =  "Ce champ ne peut être vide !"
@@ -108,7 +112,7 @@ const checkExpensePriorityField = (expense) => {
     return false
 }
 
-const checkNameOfExpensesNotAlreadyExist = (expense) => {
+const isNameOfExpensesNotAlreadyExist = (expense) => {
     const expenses = JSON.parse(localStorage.getItem('expenses'))
     const isNotEqual = (currentValue) => currentValue.name !== expense.name
     if(!expenses.every((isNotEqual))){
@@ -119,3 +123,75 @@ const checkNameOfExpensesNotAlreadyExist = (expense) => {
     return false
 
 }
+
+const isSpendingProfileNameFieldEmpty = () => {
+    if(spendingProfileFieldName.value === ""){
+        spendingProfileNameError.textContent = "Ce champ ne peut être vide !"
+        spendingProfileNameError.style.color = "indianred"
+        return true
+    }
+    return false
+}
+
+const isSpendingProfileNameValueContainsOnlyLetters = (expense) => {
+    const regex = /[A-Za-z]/g
+
+    if(!regex.test(spendingProfileFieldName.value)){
+        spendingProfileNameError.textContent = "Ce champ ne doit contenir que des lettres !"
+        spendingProfileNameError.style.color = "indianred"
+        return true
+    }
+
+    return false
+}
+
+const isSpendingProfileBudgetFieldEmpty = () => {
+    if(spendingProfileFieldBudget.value === ""){
+        spendingProfileBudgetError.textContent = "Ce champ ne peut être vide !"
+        spendingProfileBudgetError.style.color = "indianred"
+        return true
+    }
+    return false
+}
+
+const isSpendingProfileBudgetValueContainsOnlyNumbers = () => {
+    const regex = /[\d]/g
+
+    if(!regex.test(spendingProfileFieldBudget.value)){
+        spendingProfileNameError.textContent = "Ce champ ne doit contenir que des chiffres !"
+        spendingProfileNameError.style.color = "indianred"
+        return true
+    }
+    
+    return false
+}
+
+
+spendingForm.addEventListener('submit',(e) => {
+    e.preventDefault()
+    const isBudgetEmptyResult = isSpendingProfileBudgetFieldEmpty()
+    const isBudgetContainsOnlyNumbersResult = isSpendingProfileBudgetValueContainsOnlyNumbers()
+    const isNameEmptyResult = isSpendingProfileNameFieldEmpty()
+    const isNameContainsOnlyLettersResult = isSpendingProfileNameValueContainsOnlyLetters()
+    const expenses = JSON.parse(localStorage.getItem('expenses'))
+    expenses.push({spendingProfilename: spendingProfileFieldName.value,budget:spendingProfileFieldBudget.value})
+    const noErrors = [isNameEmptyResult,isBudgetEmptyResult,isBudgetContainsOnlyNumbersResult,isNameContainsOnlyLettersResult]
+    const isFalse = (currentValue) => currentValue === false
+    if(noErrors.every(isFalse) && expenses.length !== 0) {
+
+        fetch('/spending-profile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(expenses)
+        })
+            .then(response => {
+                response.json().then(resJson => {
+                })
+
+            })
+
+    }
+
+})

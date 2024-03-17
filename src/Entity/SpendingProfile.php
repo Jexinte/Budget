@@ -28,7 +28,7 @@ class SpendingProfile
     #[ORM\Column]
     private ?float $remainingBalance = null;
 
-    #[ORM\ManyToOne(inversedBy: 'spendingProfile')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'spendingProfile')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 

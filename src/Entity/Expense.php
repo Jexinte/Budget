@@ -21,19 +21,23 @@ class Expense
     private ?string $name = null;
 
 
-    #[ORM\Column(enumType:Category::class)]
+//    #[ORM\Column(enumType:Category::class)]
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:'Oops! Veuillez sélectionner la catégorie de votre dépense !')]
-    private ?Category $category;
+//    private ?Category $category;
+    private string $category;
 
     #[ORM\Column]
     #[Assert\NotBlank(message:'Oops! Veuillez spécifier le montant de vôtre dépense !')]
     private ?float $amount = null;
 
-    #[ORM\Column(enumType: Priority::class)]
+//    #[ORM\Column(enumType: Priority::class)]
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:'Oops! Merci de spécifier la priorité de vôtre dépense !')]
-    private ?Priority $priority = null;
+//    private ?Priority $priority = null;
+    private ?string $priority = null;
 
-    #[ORM\ManyToOne(inversedBy: 'expense')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'expense')]
     #[ORM\JoinColumn(nullable: false)]
     private ?SpendingProfile $spendingProfile = null;
 
@@ -54,12 +58,12 @@ class Expense
         return $this;
     }
 
-    public function getCategory(): ?Category
+    public function getCategory(): ?string
     {
         return $this->category;
     }
 
-    public function setCategory(?Category $category): static
+    public function setCategory(?string $category): static
     {
         $this->category = $category;
 
@@ -73,17 +77,17 @@ class Expense
 
     public function setAmount(float $amount): static
     {
-        $this->amount = $amount;
+        $this->amount = floatval($amount);
 
         return $this;
     }
 
-    public function getPriority(): ?Priority
+    public function getPriority(): ?string
     {
         return $this->priority;
     }
 
-    public function setPriority(?Priority $priority): static
+    public function setPriority(?string $priority): static
     {
         $this->priority = $priority;
 

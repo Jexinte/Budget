@@ -3,10 +3,15 @@
 namespace App\Controller;
 
 use App\Form\SpendingProfileType;
+use App\Repository\ExpenseRepository;
+use App\Repository\SpendingProfileRepository;
+use App\Service\ExpenseService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class SpendingProfileController extends AbstractController
 {
@@ -19,18 +24,9 @@ class SpendingProfileController extends AbstractController
         ]);
     }
     #[Route('/spending-profile', name: 'spendingProfilePost',methods: ['POST'])]
-    public function spendingProfilePost(Request $request): Response
+    public function spendingProfilePost(Request $request,SerializerInterface $serializer,ExpenseService $expenseService,SpendingProfileRepository $profileRepository,ExpenseRepository $expenseRepository): JsonResponse
     {
-        $form = $this->createForm(SpendingProfileType::class);
-        $response = new Response();
-        $form->handleRequest($request);
-
-        if($form->isValid() && $form->isSubmitted())
-        {
-            dd('OK');
-        }
-        return $this->render('spending_profile/spending_profile.twig', [
-            'form' => $form,
-        ],$response->setStatusCode($response::HTTP_BAD_REQUEST));
+        $expenseService->saveProfileAndExpenses($request,$profileRepository,$expenseRepository);
+        return  $this->json(['data' => 'saved']);
     }
 }
