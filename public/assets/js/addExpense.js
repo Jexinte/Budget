@@ -180,7 +180,7 @@ spendingForm.addEventListener('submit',(e) => {
     const log = console.log
     if(noErrors.every(isFalse) && expenses.length !== 0) {
         if(window.confirm('Êtes-vous d\'envoyer ses dépenses ? Vous ne pourrez plus les modifier par la suite !')){
-            fetch('/spending-profile', {
+            fetch('/créer-un-profil-de-dépense', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

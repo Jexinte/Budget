@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class SpendingProfileController extends AbstractController
 {
-    #[Route('/spending-profile', name: 'spendingProfileGet',methods: ['GET'])]
+    #[Route('/créer-un-profil-de-dépense', name: 'spendingProfileGet',methods: ['GET'])]
     public function spendingProfileGet(): Response
     {
         $form = $this->createForm(SpendingProfileType::class);
@@ -23,7 +23,7 @@ class SpendingProfileController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route('/spending-profile', name: 'spendingProfilePost',methods: ['POST'])]
+    #[Route('/créer-un-profil-de-dépense', name: 'spendingProfilePost',methods: ['POST'])]
     public function spendingProfilePost(Request $request,SerializerInterface $serializer,ExpenseService $expenseService,SpendingProfileRepository $profileRepository,ExpenseRepository $expenseRepository): JsonResponse
     {
         $expenseService->saveProfileAndExpenses($request,$profileRepository,$expenseRepository);

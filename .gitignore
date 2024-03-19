@@ -10,3 +10,4 @@ phpstan.dist.neon
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+notes.md
