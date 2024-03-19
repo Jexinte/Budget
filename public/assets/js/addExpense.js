@@ -124,61 +124,64 @@ const isNameOfExpensesNotAlreadyExist = (expense) => {
 
 }
 
-const isSpendingProfileNameFieldEmpty = () => {
-    if(spendingProfileFieldName.value === ""){
-        spendingProfileNameError.textContent = "Ce champ ne peut être vide !"
-        spendingProfileNameError.style.color = "indianred"
-        return true
+
+
+const isSpendingProfileNameValueContainsOnlyNumbersOrEmpty = (expense) => {
+    const regexNumbers = /[\d]/g
+    spendingProfileNameError.style.color = "indianred"
+
+    switch (true) {
+        case regexNumbers.test(spendingProfileFieldName.value):
+            spendingProfileNameError.textContent = "Ce champ ne doit contenir que des lettres !"
+            return true
+        case spendingProfileFieldName.value === "":
+            spendingProfileNameError.textContent = "Ce champ ne peut être vide !"
+            return true
+        default:
+            spendingProfileNameError.textContent = ""
+            return false
     }
-    return false
+
 }
 
-const isSpendingProfileNameValueContainsOnlyLetters = (expense) => {
-    const regex = /[A-Za-z]/g
 
-    if(!regex.test(spendingProfileFieldName.value)){
-        spendingProfileNameError.textContent = "Ce champ ne doit contenir que des lettres !"
-        spendingProfileNameError.style.color = "indianred"
-        return true
-    }
 
-    return false
-}
-
-const isSpendingProfileBudgetFieldEmpty = () => {
-    if(spendingProfileFieldBudget.value === ""){
-        spendingProfileBudgetError.textContent = "Ce champ ne peut être vide !"
-        spendingProfileBudgetError.style.color = "indianred"
-        return true
-    }
-    return false
-}
-
-const isSpendingProfileBudgetValueContainsOnlyNumbers = () => {
-    const regex = /[\d]/g
-
-    if(!regex.test(spendingProfileFieldBudget.value)){
-        spendingProfileNameError.textContent = "Ce champ ne doit contenir que des chiffres !"
-        spendingProfileNameError.style.color = "indianred"
-        return true
-    }
+const isSpendingProfileBudgetValueContainsOnlyLettersOrIsEmpty = () => {
+    const regexLetters = /[A-Za-z]/g
     
-    return false
+    spendingProfileBudgetError.style.color = "indianred"
+    
+    switch (true)
+    {
+        case regexLetters.test(spendingProfileFieldBudget.value):
+            spendingProfileBudgetError.textContent = "Ce champ ne doit contenir que des chiffres !"
+            return true
+        case spendingProfileFieldBudget.value === "":
+            spendingProfileBudgetError.textContent = "Ce champ ne peut être vide !"
+            return true
+        default:
+            spendingProfileBudgetError.textContent = ""
+            return false
+    }
+
 }
 
 
 spendingForm.addEventListener('submit',(e) => {
     e.preventDefault()
-    const isBudgetEmptyResult = isSpendingProfileBudgetFieldEmpty()
-    const isBudgetContainsOnlyNumbersResult = isSpendingProfileBudgetValueContainsOnlyNumbers()
-    const isNameEmptyResult = isSpendingProfileNameFieldEmpty()
-    const isNameContainsOnlyLettersResult = isSpendingProfileNameValueContainsOnlyLetters()
+    const isBudgetContainsOnlyNumbersResult = isSpendingProfileBudgetValueContainsOnlyLettersOrIsEmpty()
+    const isNameContainsOnlyLettersResult = isSpendingProfileNameValueContainsOnlyNumbersOrEmpty()
     const expenses = JSON.parse(localStorage.getItem('expenses'))
+
+
     if(expenses !== null){
         expenses.push({spendingProfilename: spendingProfileFieldName.value,budget:spendingProfileFieldBudget.value})
-        sendData(expenses,[isNameEmptyResult,isBudgetEmptyResult,isBudgetContainsOnlyNumbersResult,isNameContainsOnlyLettersResult])
+        return sendData(expenses,[isBudgetContainsOnlyNumbersResult,isNameContainsOnlyLettersResult])
     }
-    
+    // alert('Ajoutez une dépense pour créer votre profil !')
+
+    isSpendingProfileBudgetValueContainsOnlyLettersOrIsEmpty()
+    isSpendingProfileNameValueContainsOnlyNumbersOrEmpty()
 })
 
 const sendData = (expenses,errorsCheck) => {
