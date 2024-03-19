@@ -9,8 +9,7 @@ use App\Repository\ExpenseRepository;
 use App\Repository\SpendingProfileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-use Symfony\Component\Serializer\SerializerInterface;
+
 
 class ExpenseService extends  AbstractController {
     public function getCleanData(Request $request):array

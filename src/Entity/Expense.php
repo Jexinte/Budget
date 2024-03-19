@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use App\Enum\Category;
-use App\Enum\Priority;
 use App\Repository\ExpenseRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,10 +19,8 @@ class Expense
     private ?string $name = null;
 
 
-//    #[ORM\Column(enumType:Category::class)]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:'Oops! Veuillez sélectionner la catégorie de votre dépense !')]
-//    private ?Category $category;
     private string $category;
 
     #[ORM\Column]

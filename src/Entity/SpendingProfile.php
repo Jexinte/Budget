@@ -6,9 +6,13 @@ use App\Repository\SpendingProfileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SpendingProfileRepository::class)]
+#[UniqueEntity(
+    fields: 'name',message: 'Le nom du profil n\'est pas disponible, veuillez en définir un autre'
+)]
 class SpendingProfile
 {
     #[ORM\Id]
