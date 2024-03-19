@@ -177,6 +177,7 @@ spendingForm.addEventListener('submit',(e) => {
     expenses.push({spendingProfilename: spendingProfileFieldName.value,budget:spendingProfileFieldBudget.value})
     const noErrors = [isNameEmptyResult,isBudgetEmptyResult,isBudgetContainsOnlyNumbersResult,isNameContainsOnlyLettersResult]
     const isFalse = (currentValue) => currentValue === false
+    const log = console.log
     if(noErrors.every(isFalse) && expenses.length !== 0) {
         if(window.confirm('Êtes-vous d\'envoyer ses dépenses ? Vous ne pourrez plus les modifier par la suite !')){
             fetch('/spending-profile', {
@@ -186,10 +187,11 @@ spendingForm.addEventListener('submit',(e) => {
                 },
                 body: JSON.stringify(expenses)
             })
-                .then(response => {
-                    response.json().then(resJson => {
-                    })
-
+                .then((everything) => {
+                       if (everything.ok) {
+                           localStorage.clear()
+                           window.location = "/"
+                       }
                 })
         }
 
