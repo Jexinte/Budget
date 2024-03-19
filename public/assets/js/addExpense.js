@@ -174,27 +174,35 @@ spendingForm.addEventListener('submit',(e) => {
     const isNameEmptyResult = isSpendingProfileNameFieldEmpty()
     const isNameContainsOnlyLettersResult = isSpendingProfileNameValueContainsOnlyLetters()
     const expenses = JSON.parse(localStorage.getItem('expenses'))
-    expenses.push({spendingProfilename: spendingProfileFieldName.value,budget:spendingProfileFieldBudget.value})
-    const noErrors = [isNameEmptyResult,isBudgetEmptyResult,isBudgetContainsOnlyNumbersResult,isNameContainsOnlyLettersResult]
+    if(expenses !== null){
+        expenses.push({spendingProfilename: spendingProfileFieldName.value,budget:spendingProfileFieldBudget.value})
+        sendData(expenses,[isNameEmptyResult,isBudgetEmptyResult,isBudgetContainsOnlyNumbersResult,isNameContainsOnlyLettersResult])
+    }
+    
+})
+
+const sendData = (expenses,errorsCheck) => {
     const isFalse = (currentValue) => currentValue === false
     const log = console.log
-    if(noErrors.every(isFalse) && expenses.length !== 0) {
-        if(window.confirm('Êtes-vous d\'envoyer ses dépenses ? Vous ne pourrez plus les modifier par la suite !')){
-            fetch('/créer-un-profil-de-dépense', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(expenses)
-            })
-                .then((everything) => {
-                       if (everything.ok) {
-                           localStorage.clear()
-                           window.location = "/"
-                       }
-                })
-        }
-
+    if(errorsCheck.every(isFalse) && expenses.length !== 0) {
+        confirmSendOfData(expenses)
     }
+}
 
-})
+const confirmSendOfData = (expenses) => {
+    if(window.confirm('Êtes-vous d\'envoyer ses dépenses ? Vous ne pourrez plus les modifier par la suite !')){
+        fetch('/créer-un-profil-de-dépense', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(expenses)
+        })
+            .then((everything) => {
+                if (everything.ok) {
+                    localStorage.clear()
+                    window.location = "/"
+                }
+            })
+    }
+}
