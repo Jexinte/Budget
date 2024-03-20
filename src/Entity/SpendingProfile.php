@@ -21,6 +21,8 @@ class SpendingProfile
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:'Oops! Ce champ ne peut être vide !')]
     private ?string $name = null;
+    #[ORM\Column(length: 255)]
+    private ?string $description;
 
     #[ORM\Column]
     #[Assert\NotBlank(message:'Oops! Ce champ ne peut être vide !')]
@@ -124,5 +126,15 @@ class SpendingProfile
     public function setExpenseForm(?Expense $expenseForm): void
     {
         $this->expenseForm = $expenseForm;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 }

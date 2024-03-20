@@ -1,5 +1,7 @@
 const spendingProfileFieldName = document.getElementById('spending_profile_name')
+const spendingProfileFieldDescription = document.getElementById('spending_profile_description')
 const spendingProfileNameError = document.getElementById('error-name-spending')
+const spendingProfileDescriptionError = document.getElementById('error-description-spending')
 const spendingProfileFieldBudget = document.getElementById('spending_profile_budget')
 const spendingProfileBudgetError = document.getElementById('error-budget')
 const expenseFieldName = document.getElementById('spending_profile_expenseForm_name')
@@ -165,23 +167,44 @@ const isSpendingProfileBudgetValueContainsOnlyLettersOrIsEmpty = () => {
     }
 
 }
+const isSpendingProfileDescriptionValueContainsOnlyLettersOrIsEmpty = () => {
+    const regexLetters = /[\d]/g
+
+    spendingProfileDescriptionError.style.color = "indianred"
+
+    switch (true)
+    {
+        case regexLetters.test(spendingProfileFieldDescription.value):
+            spendingProfileDescriptionError.textContent = "Ce champ ne doit contenir que des lettres !"
+            return true
+        case spendingProfileFieldDescription.value === "":
+            spendingProfileDescriptionError.textContent = "Ce champ ne peut être vide !"
+            return true
+        default:
+            spendingProfileDescriptionError.textContent = ""
+            return false
+    }
+
+}
 
 
 spendingForm.addEventListener('submit',(e) => {
     e.preventDefault()
     const isBudgetContainsOnlyNumbersResult = isSpendingProfileBudgetValueContainsOnlyLettersOrIsEmpty()
     const isNameContainsOnlyLettersResult = isSpendingProfileNameValueContainsOnlyNumbersOrEmpty()
+    const isDescriptionContainsOnlyLettersResult = isSpendingProfileDescriptionValueContainsOnlyLettersOrIsEmpty()
     const expenses = JSON.parse(localStorage.getItem('expenses'))
 
 
     if(expenses !== null){
-        expenses.push({spendingProfilename: spendingProfileFieldName.value,budget:spendingProfileFieldBudget.value})
-        return sendData(expenses,[isBudgetContainsOnlyNumbersResult,isNameContainsOnlyLettersResult])
+        expenses.push({spendingProfilename: spendingProfileFieldName.value,budget:spendingProfileFieldBudget.value,description:spendingProfileFieldDescription.value})
+        return sendData(expenses,[isBudgetContainsOnlyNumbersResult,isNameContainsOnlyLettersResult,isDescriptionContainsOnlyLettersResult])
     }
     alert('Ajoutez une dépense pour créer votre profil !')
 
     isSpendingProfileBudgetValueContainsOnlyLettersOrIsEmpty()
     isSpendingProfileNameValueContainsOnlyNumbersOrEmpty()
+    isSpendingProfileDescriptionValueContainsOnlyLettersOrIsEmpty()
 })
 
 const sendData = (expenses,errorsCheck) => {
