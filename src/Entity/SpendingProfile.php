@@ -10,9 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SpendingProfileRepository::class)]
-#[UniqueEntity(
-    fields: 'name',message: 'Le nom du profil n\'est pas disponible, veuillez en définir un autre'
-)]
+
 class SpendingProfile
 {
     #[ORM\Id]
@@ -27,10 +25,6 @@ class SpendingProfile
     #[ORM\Column]
     #[Assert\NotBlank(message:'Oops! Ce champ ne peut être vide !')]
     private ?float $budget = null;
-
-
-    #[ORM\Column]
-    private ?float $remainingBalance = null;
 
     #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'spendingProfile')]
     #[ORM\JoinColumn(nullable: false)]
@@ -76,17 +70,7 @@ class SpendingProfile
         return $this;
     }
 
-    public function getRemainingBalance(): ?float
-    {
-        return $this->remainingBalance;
-    }
 
-    public function setRemainingBalance(float $remainingBalance): static
-    {
-        $this->remainingBalance = $remainingBalance;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {

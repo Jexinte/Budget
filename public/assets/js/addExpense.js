@@ -178,7 +178,7 @@ spendingForm.addEventListener('submit',(e) => {
         expenses.push({spendingProfilename: spendingProfileFieldName.value,budget:spendingProfileFieldBudget.value})
         return sendData(expenses,[isBudgetContainsOnlyNumbersResult,isNameContainsOnlyLettersResult])
     }
-    // alert('Ajoutez une dépense pour créer votre profil !')
+    alert('Ajoutez une dépense pour créer votre profil !')
 
     isSpendingProfileBudgetValueContainsOnlyLettersOrIsEmpty()
     isSpendingProfileNameValueContainsOnlyNumbersOrEmpty()
@@ -186,7 +186,6 @@ spendingForm.addEventListener('submit',(e) => {
 
 const sendData = (expenses,errorsCheck) => {
     const isFalse = (currentValue) => currentValue === false
-    const log = console.log
     if(errorsCheck.every(isFalse) && expenses.length !== 0) {
         confirmSendOfData(expenses)
     }
@@ -194,18 +193,27 @@ const sendData = (expenses,errorsCheck) => {
 
 const confirmSendOfData = (expenses) => {
     if(window.confirm('Êtes-vous d\'envoyer ses dépenses ? Vous ne pourrez plus les modifier par la suite !')){
-        fetch('/créer-un-profil-de-dépense', {
+        fetch('/créer-un-profil-de-dépenses', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(expenses)
         })
-            .then((everything) => {
-                if (everything.ok) {
-                    localStorage.clear()
-                    window.location = "/"
-                }
+            .then((response) => {
+               response.json().then(res => {
+                   switch (res.status){
+                       case 200:
+                           localStorage.clear()
+                           window.location = "/"
+                           break
+                       default:
+                           spendingProfileNameError.textContent = "Le nom du profil n\'est pas disponible, veuillez en définir un autre"
+                           break
+                   }
+               })
             })
+
+
     }
 }

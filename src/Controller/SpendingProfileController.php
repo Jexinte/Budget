@@ -26,7 +26,6 @@ class SpendingProfileController extends AbstractController
     #[Route('/créer-un-profil-de-dépenses', name: 'spendingProfilePost',methods: ['POST'])]
     public function spendingProfilePost(Request $request,ExpenseService $expenseService,SpendingProfileRepository $profileRepository,ExpenseRepository $expenseRepository): JsonResponse
     {
-        $expenseService->saveProfileAndExpenses($request,$profileRepository,$expenseRepository);
-        return  $this->json(['data' => 'saved']);
+        return !$expenseService->saveProfileAndExpenses($request,$profileRepository,$expenseRepository) ? $this->json(["status" => Response::HTTP_BAD_REQUEST]) : $this->json(["status" => Response::HTTP_OK]);
     }
 }

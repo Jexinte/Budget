@@ -26,32 +26,47 @@ class ExpenseService extends  AbstractController {
         }
         return [$spendingProfileData,$reqArr,];
     }
-    public function saveProfileAndExpenses(Request $request,SpendingProfileRepository $profileRepository,ExpenseRepository $expenseRepository):void
+    public function saveProfileAndExpenses(Request $request,SpendingProfileRepository $profileRepository,ExpenseRepository $expenseRepository): bool
+    {
+        $status = false;
+        $expensesData = $this->getCleanData($request)[1];
+        if(!$this->IsSpendingProfileNameAlreadyExist($profileRepository,current($this->getCleanData($request))['name'])){
+        $spendingProfile = $this->saveProfile($request,$profileRepository);
+
+            foreach($expensesData as $expenseArr)
+            {
+                $expense = new Expense();
+                $expense->setName($expenseArr['name']);
+                $expense->setAmount(floatval($expenseArr['amount']));
+                $expense->setCategory($expenseArr['category']);
+                $expense->setSpendingProfile($spendingProfile);
+                $expense->setPriority($expenseArr['priority']);
+                $expenseRepository->getEm()->persist($expense);
+            }
+
+            $expenseRepository->getEm()->flush();
+            $status = true;
+        }
+        return $status;
+
+    }
+
+    public function saveProfile(Request $request,SpendingProfileRepository $profileRepository):SpendingProfile
     {
         $spendingProfileData = current($this->getCleanData($request));
-        $expensesData = $this->getCleanData($request)[1];
 
         $spending = new SpendingProfile();
         $spending->setName($spendingProfileData['name']);
         $spending->setBudget($spendingProfileData['budget']);
         $spending->setUser($this->getUser());
-        $spending->setRemainingBalance(544);
-        foreach($expensesData as $expenseArr)
-        {
-
-            $expense = new Expense();
-            $expense->setName($expenseArr['name']);
-            $expense->setAmount(floatval($expenseArr['amount']));
-            $expense->setCategory($expenseArr['category']);
-            $expense->setPriority($expenseArr['priority']);
-            $expense->setSpendingProfile($spending);
-
-
-            $expenseRepository->getEm()->persist($expense);
-            $expenseRepository->getEm()->flush();
-        }
         $profileRepository->getEm()->persist($spending);
         $profileRepository->getEm()->flush();
+        return $spending;
+    }
+
+    public function IsSpendingProfileNameAlreadyExist(SpendingProfileRepository $profileRepository,string $spendingProfileName):bool
+    {
+        return is_object($profileRepository->findOneBy(["name" => $spendingProfileName]));
     }
 }
 
