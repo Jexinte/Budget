@@ -1,0 +1,96 @@
+header {
+    margin-bottom: 9em;
+}
+
+.nav {
+    display: flex;
+    justify-content:flex-start;
+}
+.links > img {
+    padding-left: 2em;
+}
+#create_spending_profile{
+    text-decoration: none;
+    color: black;
+    font-weight: bolder;
+    display: block;
+    margin-top: 7em;
+    width: 80%;
+}
+
+#h1 {
+    margin-bottom: 3em;
+    text-decoration: underline;
+    text-decoration-thickness: 0.12em;
+    text-decoration-color: indianred;
+}
+.fa-solid{
+    color: black;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+}
+
+form label,form input,form select {
+    width: 100%;
+}
+
+#create_spending_profile ul {
+    padding:0;
+    position: absolute;
+    top: 4.8em;
+}
+
+#create_spending_profile ul li {
+    color: indianred;
+}
+form input,form select {
+    padding:.4em;
+}
+form div {
+    position: relative;
+    width: 100%;
+}
+#spending_form div:nth-child(2) > .required {
+    display: none;
+}
+form div:nth-child(5) {
+    top:1em;
+}
+#spending_profile_expenseForm{
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+}
+
+.add_spending_box{
+    margin-block: 3em;
+}
+#add_spending{
+    width: 100%;
+}
+#spending_profile_save {
+    width: 100%;
+}
+footer {
+    margin-top: 26em;
+}
+
+.tbody button {
+    color:white;
+    background:none;
+    border:none;
+    font-weight: bolder;
+    cursor: pointer;
+}
+#spending_profile_save{
+    position: relative;
+    top: 3em;
+}
+
+#h2 {
+    margin-bottom: 0.7em;
+}

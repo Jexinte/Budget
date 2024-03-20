@@ -1,0 +1,59 @@
+{% extends 'layout.twig' %}
+
+{% block title %} <title>Créer un profil de dépense | {{ parent () }}</title> {% endblock %}
+{% block css %} <link rel="stylesheet" href="/assets/css/spending-profile.css{{ _self.cssVersionning() }}"> {% endblock %}
+
+{% block content %}
+    <header>
+        <nav class='nav'>
+            <a href="{{ path('homepage') }}" class="links" id="back"><i class="fa-solid fa-arrow-left"></i></a>
+        </nav>
+    </header>
+    <div class="container-fluid" id="create_spending_profile">
+        <h1 class="text-center" id="h1">Créer un profil de dépenses</h1>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                {{ form_start(form,{'action':path('spendingProfilePost')}) }}
+                {{ form_row(form.name) }}
+                <p id="error-name-spending"></p>
+                {{ form_row(form.expenseForm.name) }}
+
+                <p id="error-name"></p>
+                {{ form_row(form.expenseForm.amount) }}
+                <p id="error-amount"></p>
+                {{ form_row(form.expenseForm.category) }}
+                <p id="error-category"></p>
+                {{ form_row(form.expenseForm.priority) }}
+                <p id="error-priority"></p>
+                {{ form_row(form.budget) }}
+                <p id="error-budget"></p>
+
+                <div class="add_spending_box">
+                    <button class="btn btn-dark text-center" id="add_spending" type="button">Ajouter une dépense</button>
+                </div>
+                <div class="all-expenses">
+                    <h2 class="text-center" id="h2"></h2>
+                    <table class="table">
+                        <thead>
+                        <tr class="table-dark">
+                            <th class="text-center">Nom</th>
+                            <th class="text-center">Catégorie</th>
+                            <th class="text-center">Montant</th>
+                            <th class="text-center">Priorité</th>
+                            <th class="text-center delete-header-table" >Supprimer</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                {{ form_row(form.save) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="/assets/js/addExpense.js"></script>
+<script src="/assets/js/getExpense.js"></script>
+<script src="/assets/js/deleteExpense.js"></script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'layout.twig' %}
+
+{% block title %} <title>Accueil | {{ parent () }}</title> {% endblock %}
+{% block css %} <link rel="stylesheet" href="/assets/css/homepage.css{{ _self.cssVersionning() }}"> {% endblock %}
+
+{% block content %}
+    <header>
+        <nav class='nav'>
+            <a href="#" class="links"><img id="logo" src="/assets/img/logo/logo.jpg" alt="Logo" height="100"></a>
+            <a href="{{ path('logout') }}" class="links" id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+        </nav>
+    </header>
+    <div class="container-fluid" id="homepage">
+        {% if totalSpendingProfiles == 0 %}
+            <a href="{{ path('spendingProfileGet') }}" class="text-center" id="add_spending_profile"><i class="fa-solid fa-plus fa-beat"></i></a>
+{#            {% else %}#}
+{#            <div class="spendingProfile">#}
+{#                {% for spendingProfile in spendingProfiles %}#}
+{#                    #}
+{#                {% endfor %}#}
+{#            </div>#}
+        {% endif %}
+
+    </div>
+{% endblock %}
