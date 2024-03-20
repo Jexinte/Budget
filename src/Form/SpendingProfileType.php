@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Expense;
 use App\Entity\SpendingProfile;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;

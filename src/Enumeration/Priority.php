@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enum;
+namespace App\Enumeration;
 
 enum Priority: string{
     case Mandatory = 'Obligatoire';

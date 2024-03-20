@@ -30,7 +30,7 @@ class ExpenseService extends  AbstractController {
     {
         $status = false;
         $expensesData = $this->getCleanData($request)[1];
-        if(!$this->IsSpendingProfileNameAlreadyExist($profileRepository,current($this->getCleanData($request))['name'])){
+        if(!$this->isSpendingProfileNameAlreadyExist($profileRepository,current($this->getCleanData($request))['name'])){
         $spendingProfile = $this->saveProfile($request,$profileRepository);
 
             foreach($expensesData as $expenseArr)
@@ -64,7 +64,7 @@ class ExpenseService extends  AbstractController {
         return $spending;
     }
 
-    public function IsSpendingProfileNameAlreadyExist(SpendingProfileRepository $profileRepository,string $spendingProfileName):bool
+    public function isSpendingProfileNameAlreadyExist(SpendingProfileRepository $profileRepository,string $spendingProfileName):bool
     {
         return is_object($profileRepository->findOneBy(["name" => $spendingProfileName]));
     }
