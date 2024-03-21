@@ -76,10 +76,21 @@ class ExpenseService extends  AbstractController {
     {
         $total = 0;
         $expenses = $expenseRepository->findBy(["spendingProfile" => $spendingProfile]);
-        foreach ($expenses as $expense){
-            $total+=$expense->getAmount();
+
+        switch (true)
+        {
+            case count($expenses) > 1:
+                foreach ($expenses as $expense){
+                    $total+=$expense->getAmount();
+                }
+            break;
+
+            default:
+                $total = current($expenses)->getAmount();
+                break;
         }
         return $total;
+
     }
 }
 

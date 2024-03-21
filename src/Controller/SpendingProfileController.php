@@ -34,7 +34,8 @@ class SpendingProfileController extends AbstractController
     {
         return $this->render("spending_profile/get_spending_profile.twig",[
             "spendingProfile" => $spendingProfile,
-            "expense" => $expenseRepository->findOneBy(["spendingProfile" => $spendingProfile]),
+            "expenses" => $expenseRepository->findBy(["spendingProfile" => $spendingProfile]),
+            "totalExpenses" => count($expenseRepository->findBy(["spendingProfile" => $spendingProfile])),
             "totalAmountExpenses" => $expenseService->totalAmountExpenses($expenseRepository,$spendingProfile)
         ]);
     }
