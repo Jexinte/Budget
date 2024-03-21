@@ -16,10 +16,18 @@
             {% else %}
             <div class="spendingProfile">
                 {% for spendingProfile in spendingProfiles %}
-                    {{ spendingProfile.name}}
+                    <a href="#" class="card">
+                        <h2 class="h2">{{spendingProfile.name}}</h2>
+                        <p class="description">{{spendingProfile.description}}</p>
+                    </a>
+
                 {% endfor %}
             </div>
         {% endif %}
 
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/assets/js/randomColor.js"></script>
 {% endblock %}
