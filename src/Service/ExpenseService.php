@@ -61,6 +61,7 @@ class ExpenseService extends  AbstractController {
         $spending->setBudget($spendingProfileData['budget']);
         $spending->setDescription($spendingProfileData['description']);
         $spending->setUser($this->getUser());
+        $spending->setSlug($spending->getName());
         $profileRepository->getEm()->persist($spending);
         $profileRepository->getEm()->flush();
         return $spending;

@@ -6,7 +6,7 @@ use App\Repository\SpendingProfileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SpendingProfileRepository::class)]
@@ -23,6 +23,8 @@ class SpendingProfile
     private ?string $name = null;
     #[ORM\Column(length: 255)]
     private ?string $description;
+    #[ORM\Column(length: 255)]
+    private ?string $slug;
 
     #[ORM\Column]
     #[Assert\NotBlank(message:'Oops! Ce champ ne peut être vide !')]
@@ -55,7 +57,7 @@ class SpendingProfile
 
     public function setName(string $name): static
     {
-        $this->name = $name;
+        $this->name = ucfirst($name);
 
         return $this;
     }
@@ -136,5 +138,16 @@ class SpendingProfile
     public function setDescription(?string $description): void
     {
         $this->description = $description;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): void
+    {
+        $slugger = new AsciiSlugger();
+        $this->slug = $slugger->slug(strtolower($slug));
     }
 }
