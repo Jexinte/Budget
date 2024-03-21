@@ -1,5 +1,6 @@
 header {
     margin-bottom: 9em;
+    margin-left: 1em;
 }
 
 .nav {
@@ -72,7 +73,7 @@ form div:nth-child(5) {
 #add_spending{
     width: 100%;
 }
-#spending_profile_save {
+#spending_profile_save,textarea {
     width: 100%;
 }
 footer {

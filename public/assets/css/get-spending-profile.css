@@ -1,0 +1,37 @@
+header {
+    margin-bottom: 9em;
+    margin-left: 1em;
+}
+
+.nav {
+    display: flex;
+    justify-content:flex-start;
+}
+.links > img {
+    padding-left: 2em;
+}
+#get_spending_profile{
+    text-decoration: none;
+    color: black;
+    font-weight: bolder;
+    display: block;
+    margin-top: 7em;
+    width: 80%;
+}
+
+#get_spending_profile .h1,#get_spending_profile .h2 {
+    margin-bottom: 1em;
+}
+
+.fa-solid{
+    color: black;
+}
+
+#banner img {
+    width: 100%;
+}
+
+tfoot #total_amount_expenses {
+    text-align: right;
+    padding-right: 56px;
+}

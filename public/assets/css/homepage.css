@@ -18,6 +18,17 @@ header {
     margin-top: 7em;
 }
 
+.spendingProfile{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5em;
+    width: 80%;
+    margin: 0 auto;
+}
+#homepage .h1 {
+    text-decoration: underline;
+    text-decoration-color:indianred;
+}
 #logout {
     position: relative;
     top: 28px;
@@ -25,6 +36,25 @@ header {
     text-decoration: none;
 }
 .fa-solid{
+    color: black;
+}
+
+.spendingProfile .card {
+    padding: 1em;
+    /*border-top-color: red;*/
+    border-width: 0.3em 0 0;
+    box-shadow: -7px 10px 10px rgba(0,0,0,.1);
+    width: 200px;
+    text-decoration: none;
+}
+
+.spendingProfile .h2 {
+    font-size: 1.5em;
+}
+.spendingProfile p {
+    color: #747264;
+}
+.spendingProfile .card:visited{
     color: black;
 }
 
