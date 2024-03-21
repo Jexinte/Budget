@@ -20,7 +20,7 @@ class SpendingProfileController extends AbstractController
     public function createSpendingProfileGet(): Response
     {
         $form = $this->createForm(SpendingProfileType::class);
-        return $this->render('spending_profile/spending_profile.twig', [
+        return $this->render('spending_profile/create_spending_profile.twig', [
             'form' => $form,
         ]);
     }
@@ -33,6 +33,5 @@ class SpendingProfileController extends AbstractController
     #[Route('/profil-de-dépenses/{slug}',name:'spendingProfileGet',methods:['GET'])]
     public function spendingProfileGet(SpendingProfile $spendingProfile):Response
     {
-        dd($spendingProfile);
     }
 }
