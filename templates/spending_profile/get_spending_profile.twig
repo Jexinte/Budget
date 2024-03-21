@@ -1,0 +1,52 @@
+{% extends 'layout.twig' %}
+{% block title %} <title>Profil de dépenses - {{ spendingProfile.name}} | {{ parent () }}</title> {% endblock %}
+{% block css %} <link rel="stylesheet" href="/assets/css/get-spending-profile.css{{ _self.cssVersionning() }}"> {% endblock %}
+
+{% block content %}
+<header>
+    <nav class='nav'>
+        <a href="{{ path('homepage') }}"  id="back"><i class="fa-solid fa-arrow-left"></i></a>
+    </nav>
+</header>
+    <div class="container-fluid" id="banner">
+        <img src="/assets/img/banner/get-spending-profile.jpg" alt="banner">
+    </div>
+    <div class="container-fluid" id="get_spending_profile">
+        <h2 class="text-center h2"> Budget : {{ spendingProfile.budget }}€</h2>
+
+        <table class="table table-striped">
+            <caption class="text-center mt-2">
+                Profil de dépenses - {{ spendingProfile.name }}
+            </caption>
+            <thead>
+            <tr class="table-dark text-center">
+                <th>Nom</th>
+                <th>Catégorie</th>
+                <th>Montant</th>
+                <th>Priorité</th>
+            </tr>
+            </thead>
+
+            <tbody class="table-group-divider">
+            <tr class="table-dark text-center">
+                <td>{{ expense.name }}</td>
+                <td>{{ expense.category }}</td>
+                <td>{{ expense.amount }}€</td>
+                <td>{{ expense.priority }}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="table-dark text-center">
+                <th scope="row" colspan="1">Total</th>
+                <th scope="row" colspan="3" id="total_amount_expenses">{{ totalAmountExpenses }}€</th>
+            </tr>
+            </tfoot>
+
+        </table>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

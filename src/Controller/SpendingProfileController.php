@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class SpendingProfileController extends AbstractController
 {
@@ -31,7 +30,13 @@ class SpendingProfileController extends AbstractController
     }
 
     #[Route('/profil-de-dépenses/{slug}',name:'spendingProfileGet',methods:['GET'])]
-    public function spendingProfileGet(SpendingProfile $spendingProfile):Response
+    public function spendingProfileGet(SpendingProfile $spendingProfile,ExpenseRepository $expenseRepository,ExpenseService $expenseService):Response
     {
+        return $this->render("spending_profile/get_spending_profile.twig",[
+            "spendingProfile" => $spendingProfile,
+            "expense" => $expenseRepository->findOneBy(["spendingProfile" => $spendingProfile]),
+            "totalAmountExpenses" => $expenseService->totalAmountExpenses($expenseRepository,$spendingProfile)
+        ]);
     }
+
 }

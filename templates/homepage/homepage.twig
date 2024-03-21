@@ -6,11 +6,15 @@
 {% block content %}
     <header>
         <nav class='nav'>
-            <a href="#" class="links"><img id="logo" src="/assets/img/logo/logo.jpg" alt="Logo" height="100"></a>
-            <a href="{{ path('logout') }}" class="links" id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+            <a href="{{ path('homepage') }}" class="links"><img id="logo" src="/assets/img/logo/logo.jpg" alt="Logo" height="100"></a>
+            <div class="right">
+                <a href="{{ path('createSpendingProfilePost') }}" class="links" id="logout"><i class="fa-solid fa-plus"></i></a>
+                <a href="{{ path('logout') }}" class="links" id="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+            </div>
         </nav>
     </header>
     <div class="container-fluid" id="homepage">
+        <h1 class="text-center mb-5 h1" > Profils de dépenses </h1>
         {% if totalSpendingProfiles == 0 %}
             <a href="{{ path('createSpendingProfileGet') }}" class="text-center" id="add_spending_profile"><i class="fa-solid fa-plus fa-beat"></i></a>
             {% else %}

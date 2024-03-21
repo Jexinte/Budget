@@ -25,7 +25,10 @@ header {
     width: 80%;
     margin: 0 auto;
 }
-
+#homepage .h1 {
+    text-decoration: underline;
+    text-decoration-color:indianred;
+}
 #logout {
     position: relative;
     top: 28px;

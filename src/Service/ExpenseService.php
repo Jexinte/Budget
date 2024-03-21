@@ -71,5 +71,15 @@ class ExpenseService extends  AbstractController {
     {
         return is_object($profileRepository->findOneBy(["name" => $spendingProfileName]));
     }
+
+    public function totalAmountExpenses (ExpenseRepository $expenseRepository,SpendingProfile $spendingProfile) : int
+    {
+        $total = 0;
+        $expenses = $expenseRepository->findBy(["spendingProfile" => $spendingProfile]);
+        foreach ($expenses as $expense){
+            $total+=$expense->getAmount();
+        }
+        return $total;
+    }
 }
 
