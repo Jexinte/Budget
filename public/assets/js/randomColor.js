@@ -5,8 +5,3 @@ const randomColor =  () =>  {
     })
 }
 randomColor()
-// // Appliquer des couleurs aléatoires aux éléments HTML avec la classe 'random-color'
-// var elements = document.querySelectorAll('.random-color');
-// elements.forEach(function(element) {
-//     element.style.backgroundColor = randomColor();
-// });
