@@ -12,11 +12,11 @@
     </header>
     <div class="container-fluid" id="homepage">
         {% if totalSpendingProfiles == 0 %}
-            <a href="{{ path('spendingProfileGet') }}" class="text-center" id="add_spending_profile"><i class="fa-solid fa-plus fa-beat"></i></a>
+            <a href="{{ path('createSpendingProfileGet') }}" class="text-center" id="add_spending_profile"><i class="fa-solid fa-plus fa-beat"></i></a>
             {% else %}
             <div class="spendingProfile">
                 {% for spendingProfile in spendingProfiles %}
-                    <a href="#" class="card">
+                    <a href="{{ path('spendingProfileGet',{ slug:spendingProfile.slug }) }}" class="card">
                         <h2 class="h2">{{spendingProfile.name}}</h2>
                         <p class="description">{{spendingProfile.description}}</p>
                     </a>

@@ -13,7 +13,7 @@
         <h1 class="text-center" id="h1">Créer un profil de dépenses</h1>
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                {{ form_start(form,{'action':path('spendingProfilePost')}) }}
+                {{ form_start(form,{'action':path('createSpendingProfilePost')}) }}
                 {{ form_row(form.name) }}
                 <p id="error-name-spending"></p>
                 {{ form_row(form.description) }}
