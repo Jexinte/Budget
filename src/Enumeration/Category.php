@@ -10,4 +10,5 @@ enum Category: string{
     case Savings = 'Epargne';
     case Debts = 'Dettes';
     case CurrentExpenses = 'Dépenses courantes';
+    case DrivingSchool = 'Auto-école';
 }
