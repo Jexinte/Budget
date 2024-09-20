@@ -12,9 +12,10 @@ class HomepageController extends AbstractController
     #[Route('/', name: 'homepage')]
     public function homepage(SpendingProfileRepository $profileRepository): Response
     {
+        $userSpendingProfiles = $profileRepository->findBy(['user' => $this->getUser()]);
         return $this->render('homepage/homepage.twig', [
-            'spendingProfiles' => $profileRepository->findAll(),
-            'totalSpendingProfiles' => count($profileRepository->findAll())
+            'spendingProfiles' => $userSpendingProfiles,
+            'totalSpendingProfiles' => count($userSpendingProfiles)
         ]);
     }
 }
