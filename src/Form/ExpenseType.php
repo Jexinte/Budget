@@ -32,7 +32,8 @@ class ExpenseType extends AbstractType
                         Category::Recreation->value => Category::Recreation->value,
                         Category::Savings->value => Category::Savings->value,
                         Category::Debts->value => Category::Debts->value,
-                        Category::CurrentExpenses->value  => Category::CurrentExpenses->value
+                        Category::CurrentExpenses->value  => Category::CurrentExpenses->value,
+                        Category::DrivingSchool->value  => Category::DrivingSchool->value
                     ]
                 ])
             ->add('amount',NumberType::class,
